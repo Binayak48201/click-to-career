@@ -19,4 +19,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/postview', function () {
+    return view('posts.show');
+});
+
+
+
 require __DIR__.'/auth.php';
