@@ -9,9 +9,8 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $posts = Forum::with('category')->get();
 
-        $posts = Forum::all();
-
-        return view('welcome',compact('posts'));
+        return view('welcome', compact('posts'));
     }
 }

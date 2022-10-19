@@ -22,37 +22,24 @@
                                         <svg>
                                             <use xlink:href="#icon-time"></use>
                                         </svg>
-                                    </i>6 Jan,2019
+                                    </i>
+                                    {{ $post->created_at->diffForHumans() }}
                                 </a>
                             </div>
                             <h3 class="tt-item-title">
-                                <a href="#">Web Hosting Packages for ThemeForest WordPress</a>
+                                <a href="#">
+                                    {{ $post->title }}
+                                </a>
                             </h3>
                             <div class="tt-item-tag">
                                 <ul class="tt-list-badge">
-                                    <li><a href="#"><span class="tt-color03 tt-badge">exchange</span></a></li>
-                                    <li><a href="#"><span class="tt-badge">themeforest</span></a></li>
-                                    <li><a href="#"><span class="tt-badge">elements</span></a></li>
+                                    <li><a href="#"><span class="tt-color03 tt-badge">{{ $post->category->name }}</span></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="tt-item-description">
-                            <h6 class="tt-title">Get ready for Movember!</h6>
                             <p>
-                                It’s time to channel your inner Magnum P.I., Ron Swanson or Hercule Poroit! It’s the
-                                time that all guys (or gals) love and all our
-                                partners hate It’s Movember!
-                            </p>
-                            <p>
-                                Throughout November we will be inviting all community members to help raise awareness
-                                and funds for the lives of men affected
-                                by cancer and mental health problems via the Movember Foundation 10.
-                            </p>
-                            <h6 class="tt-title">How Does it Work?</h6>
-                            <p>
-                                Authors and customers with facial hair unite! Simply grow, groom, and share your facial
-                                hair during November! Even females can enter if they desire (be creative, ladies!). Be
-                                inspired by checking out last year’s highlights 28.
+                                {{ $post->body }}
                             </p>
                         </div>
                         <div class="tt-item-info info-bottom">

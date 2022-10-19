@@ -9,7 +9,8 @@
     <link rel="shortcut icon" href="favicon/favicon.ico">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
+
 </head>
 <body>
 @include('posts.layouts.header')

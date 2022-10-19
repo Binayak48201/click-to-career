@@ -44,9 +44,13 @@ class ForumController extends Controller
      * @param  \App\Models\Forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function show(Forum $forum)
+    public function show($id)
     {
-        //
+//        return Forum::where('id','=',$id)->first();
+//        $post = Forum::with('category')->where('id', '=', $id)->firstOrFail();
+//        return $post = Forum::with('category')->whereId($id)->firstOrFail();
+        $post = Forum::with('category')->where('id', $id)->firstOrFail();
+        return view('posts.show', compact('post'));
     }
 
     /**

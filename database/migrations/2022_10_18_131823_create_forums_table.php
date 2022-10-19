@@ -21,6 +21,10 @@ return new class extends Migration {
             $table->longText('body');
             $table->unsignedInteger('visits')->default(0);
             $table->timestamps();
+//            $table->foreignId('category_id')
+//                ->references('id')
+//                ->on('categories')
+//                ->onDelete('CASCADE');
         });
     }
 

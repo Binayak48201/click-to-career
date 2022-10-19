@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\{HomeController, ForumController};
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,16 +14,13 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/',[HomeController::class,'index']);
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/postview', function () {
-    return view('posts.show');
-});
-
+Route::get('/posts/{id}', [ForumController::class, 'show']);
 
 
 require __DIR__.'/auth.php';

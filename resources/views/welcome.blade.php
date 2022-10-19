@@ -23,27 +23,21 @@
                         </svg>
                     </div>
                     <div class="tt-col-description">
-                        <h6 class="tt-title"><a href="page-single-topic.html">
+                        <h6 class="tt-title">
+                            <a href="/posts/{{ $post->id }}">
                                 <svg class="tt-icon">
                                     <use xlink:href="#icon-pinned"></use>
                                 </svg>
                                 {{ $post->title }}
-                            </a></h6>
+                            </a>
+                        </h6>
                         <div class="row align-items-center no-gutters">
-                            <div class="col-11">
-                                <ul class="tt-list-badge">
-                                    <li class="show-mobile"><a href="#"><span
-                                                    class="tt-color01 tt-badge">politics</span></a></li>
-                                    <li><a href="#"><span class="tt-badge">contests</span></a></li>
-                                    <li><a href="#"><span class="tt-badge">authors</span></a></li>
-                                </ul>
-                            </div>
                             <div class="col-1 ml-auto show-mobile">
                                 <div class="tt-value">1h</div>
                             </div>
                         </div>
                     </div>
-                    <div class="tt-col-category"><span class="tt-color01 tt-badge">politics</span></div>
+                    <div class="tt-col-category"><span class="tt-color01 tt-badge">{{ $post->category->name  }}</span></div>
                     <div class="tt-col-value hide-mobile">985</div>
                     <div class="tt-col-value tt-color-select hide-mobile">502</div>
                     <div class="tt-col-value hide-mobile">15.1k</div>
