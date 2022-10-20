@@ -42,15 +42,17 @@ class ForumController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Forum  $forum
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
 //        return Forum::where('id','=',$id)->first();
-//        $post = Forum::with('category')->where('id', '=', $id)->firstOrFail();
+//       return  $post = Forum::with('category')->where('id', '=', $id)->firstOrFail();
 //        return $post = Forum::with('category')->whereId($id)->firstOrFail();
-        $post = Forum::with('category')->where('id', $id)->firstOrFail();
-        return view('posts.show', compact('post'));
+          $post = Forum::with('category','reply')->where('id', $id)->firstOrFail();
+        return view('posts.show', [
+            'post' => $post,
+        ]);
     }
 
     /**

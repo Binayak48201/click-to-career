@@ -22,5 +22,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/posts/{id}', [ForumController::class, 'show']);
 
+//SPA
+
 
 require __DIR__.'/auth.php';
