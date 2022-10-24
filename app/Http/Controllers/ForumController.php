@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Forum;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ForumController extends Controller
 {
@@ -24,7 +26,9 @@ class ForumController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::get(['id','name']);
+
+        return view("posts.create",compact('categories'));
     }
 
     /**
@@ -35,7 +39,21 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            "category_id" => "required|numeric",
+            "title" => "required",
+            "body" => "required",
+        ]);
+
+        Forum::create([
+            "user_id" => auth()->id(),
+            "category_id" => $request->category_id,
+            "title" => $request->title,
+            "body" => $request->body,
+            "slug" => Str::slug($request->title)
+        ]);
+
+        return redirect()->back();
     }
 
     /**

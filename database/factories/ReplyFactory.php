@@ -38,8 +38,6 @@ class ReplyFactory extends Factory
 //foreach($forum as $data){
 //    Reply::factory(10)->create(['forum_id' => $data->id]);
 //}
-//$forum->each(function ($data) {
-//    Reply::factory(10)->create(['forum_id' => $data->id]);
-//});
+// $forum->each(function ($data){Reply::factory(10)->create(['forum_id' => $data->id]);});
 
 

@@ -34,7 +34,7 @@
                 <div class="tt-desktop-menu">
                     <nav>
                         <ul>
-                            <li><a href="page-categories.html"><span>Categories</span></a></li>
+                            <li><a href="/"><span>Home </span></a></li>
                             <li><a href="page-tabs.html"><span>Trending</span></a></li>
                             <li><a href="page-create-topic.html"><span>New</span></a></li>
                             <li>
@@ -144,25 +144,32 @@
                                 </ul>
                             </div>
                             <button type="button" class="tt-view-all" data-toggle="modal"
-                                    data-target="#modalAdvancedSearch">Advanced Search
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <!-- /tt-search -->
-            </div>
-            <div class="col-auto ml-auto">
-                @guest
-                    <div class="tt-account-btn">
-                        <a href="/login" class="btn btn-primary">Log in</a>
-                        <a href="/register" class="btn btn-secondary">Sign up</a>
+                            data-target="#modalAdvancedSearch">Advanced Search
+                        </button>
                     </div>
-                @endguest
-                @auth
-                    {{ auth()->user()->name }}
-                @endauth
-
+                </form>
             </div>
+            <!-- /tt-search -->
+        </div>
+        <div class="col-auto ml-auto">
+            @guest
+            <div class="tt-account-btn">
+                <a href="/login" class="btn btn-primary">Log in</a>
+                <a href="/register" class="btn btn-secondary">Sign up</a>
+            </div>
+            @endguest
+            @auth
+            {{ auth()->user()->name }}
+            <a href="/posts/create  " class="tt-btn-create-topic">
+                <span class="tt-icon">
+                    <svg>
+                        <use xlink:href="#icon-create_new"></use>
+                    </svg>
+                </span>
+            </a>
+            @endauth
         </div>
     </div>
+</div>
 </header>
+

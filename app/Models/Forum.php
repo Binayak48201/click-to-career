@@ -9,6 +9,9 @@ class Forum extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['category_id','title','body','slug','user_id'];
+
+    // protected $guarded = [];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
