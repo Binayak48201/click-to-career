@@ -50,9 +50,8 @@ class ForumController extends Controller
             "category_id" => $request->category_id,
             "title" => $request->title,
             "body" => $request->body,
-            "slug" => Str::slug($request->title)
+//            "slug" => Str::slug($request->title)
         ]);
-
         return redirect()->back();
     }
 
@@ -62,14 +61,14 @@ class ForumController extends Controller
      * @param  \App\Models\Forum  $forum
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show(Forum $forum)
     {
 //        return Forum::where('id','=',$id)->first();
 //       return  $post = Forum::with('category')->where('id', '=', $id)->firstOrFail();
 //        return $post = Forum::with('category')->whereId($id)->firstOrFail();
-          $post = Forum::with('category','reply')->where('id', $id)->firstOrFail();
+//         return  $post = Forum::with('category','reply')->where('id', $forum)->firstOrFail();
         return view('posts.show', [
-            'post' => $post,
+            'post' =>  $forum->load(['category','reply'])
         ]);
     }
 

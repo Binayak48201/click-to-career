@@ -11,6 +11,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
 
+    <style>
+        ul.pagination {
+            display: flex;
+            justify-content: space-between;
+            width: 22rem;
+        }
+
+        li.page-item {
+            list-style-type: none;
+        }
+
+        div .tt-topic-list > nav {
+            width: 100%;
+            display: flex;
+            justify-content: end;
+            margin-top: 1rem;
+        }
+    </style>
 </head>
 <body>
 @include('posts.layouts.header')

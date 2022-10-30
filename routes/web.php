@@ -21,11 +21,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-
 Route::get('/posts/create', [ForumController::class, 'create'])->middleware('auth');
 Route::post('/posts', [ForumController::class, 'store'])->middleware('auth');
 
-Route::get('/posts/{id}', [ForumController::class, 'show']);
+Route::get('/posts/{forum}', [ForumController::class, 'show']);
+//Route::get('/posts/{id}', [ForumController::class, 'show']);
 
 //SPA
 require __DIR__.'/auth.php';

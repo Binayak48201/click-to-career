@@ -15,40 +15,40 @@
                     <a href="#" target="_blank">4 new posts</a> are added recently, click here to load them.
                 </div>
 
-                @foreach($posts as $post)
-                <div class="tt-item tt-itemselect">
-                    <div class="tt-col-avatar">
-                        <svg class="tt-icon">
-                            <use xlink:href="#icon-ava-k"></use>
-                        </svg>
-                    </div>
-                    <div class="tt-col-description">
-                        <h6 class="tt-title">
-                            <a href="/posts/{{ $post->id }}">
-                                <svg class="tt-icon">
-                                    <use xlink:href="#icon-pinned"></use>
-                                </svg>
-                                {{ $post->title }}
-                            </a>
-                        </h6>
-                        <div class="row align-items-center no-gutters">
-                            <div class="col-1 ml-auto show-mobile">
-                                <div class="tt-value">1h</div>
+                @foreach($forums as $forum)
+                    <div class="tt-item tt-itemselect">
+                        <div class="tt-col-avatar">
+                            <svg class="tt-icon">
+                                <use xlink:href="#icon-ava-k"></use>
+                            </svg>
+                        </div>
+                        <div class="tt-col-description">
+                            <h6 class="tt-title">
+                                <a href="{{ $forum->path() }}">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-pinned"></use>
+                                    </svg>
+                                    {{ $forum->title }}
+                                </a>
+                            </h6>
+                            <div class="row align-items-center no-gutters">
+                                <div class="col-1 ml-auto show-mobile">
+                                    <div class="tt-value">1h</div>
+                                </div>
                             </div>
                         </div>
+                        <div class="tt-col-category"><span
+                                    class="tt-color01 tt-badge">{{ $forum->category->name  }}</span></div>
+                        <div class="tt-col-value hide-mobile">985</div>
+                        <div class="tt-col-value tt-color-select hide-mobile">502</div>
+                        <div class="tt-col-value hide-mobile">15.1k</div>
+                        <div class="tt-col-value hide-mobile">1h</div>
                     </div>
-                    <div class="tt-col-category"><span class="tt-color01 tt-badge">{{ $post->category->name  }}</span></div>
-                    <div class="tt-col-value hide-mobile">985</div>
-                    <div class="tt-col-value tt-color-select hide-mobile">502</div>
-                    <div class="tt-col-value hide-mobile">15.1k</div>
-                    <div class="tt-col-value hide-mobile">1h</div>
-                </div>
                 @endforeach
+               {{ $forums->links('pagination::bootstrap-4') }}
                 <div class="tt-row-btn">
                     <button type="button" class="btn-icon js-topiclist-showmore">
-                        <svg class="tt-icon">
-                            <use xlink:href="#icon-load_lore_icon"></use>
-                        </svg>
+                      Create
                     </button>
                 </div>
             </div>
