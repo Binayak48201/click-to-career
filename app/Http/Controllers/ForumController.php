@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Forum;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -12,23 +15,37 @@ class ForumController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param  Category  $category
      */
-    public function index()
+    public function index($category = '')
     {
-        //
+        $forums = $this->getLatestPosts($category);
+
+        return view('welcome', compact('forums'));
+    }
+
+    private function getLatestPosts($category = '')
+    {
+        if ($category) {
+            $category = Category::whereSlug($category)->first();
+            $forum = Forum::where('category_id', $category->id)->latest();
+        } else {
+            $forum = Forum::latest();
+        }
+
+        return $forum->with('category')->paginate(10);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
-        $categories = Category::get(['id','name']);
+        $categories = Category::get(['id', 'name']);
 
-        return view("posts.create",compact('categories'));
+        return view("posts.create", compact('categories'));
     }
 
     /**
@@ -58,17 +75,18 @@ class ForumController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  Category  $category
      * @param  \App\Models\Forum  $forum
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function show(Forum $forum)
+    public function show($category, Forum $forum)
     {
 //        return Forum::where('id','=',$id)->first();
 //       return  $post = Forum::with('category')->where('id', '=', $id)->firstOrFail();
 //        return $post = Forum::with('category')->whereId($id)->firstOrFail();
 //         return  $post = Forum::with('category','reply')->where('id', $forum)->firstOrFail();
         return view('posts.show', [
-            'post' =>  $forum->load(['category','reply'])
+            'post' => $forum->load(['category', 'reply'])
         ]);
     }
 

@@ -46,8 +46,8 @@ class Forum extends Model
 
     public function path()
     {
-        return "/posts/{$this->slug}";
-//        return "/posts/{$this->category->slug}/{$this->slug}";
+//        return "/posts/{$this->slug}";
+        return "/posts/{$this->category->slug}/{$this->slug}";
     }
 
     /**
