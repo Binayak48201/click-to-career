@@ -26,6 +26,11 @@ class Category extends Model
         return $this->hasMany(Forum::class, 'category_id');
     }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     /**
      * @return string
      */

@@ -40,7 +40,7 @@
                             <li>
                                 <a href=""><span>Category</span></a>
                                 <ul>
-                                    @foreach(\App\Models\Category::all() as $category)
+                                    @foreach($channels as $category)
                                         <li>
                                             <a href="{{ $category->path() }}">{{ $category->name }}</a>
                                         </li>
@@ -143,10 +143,12 @@
                     </div>
                 @endguest
                 @auth
-                    {{ auth()->user()->name }}
-                    <a href="/posts/create  " class="tt-btn-create-topic">
-                        Create
-                    </a>
+                    <div style="display:flex;">
+                        <p class="mr-5">
+                            {{ auth()->user()->name }}
+                        </p>
+                        <a href="/posts/create"><span class="tt-color03 tt-badge">Create</span></a>
+                    </div>
                 @endauth
             </div>
         </div>

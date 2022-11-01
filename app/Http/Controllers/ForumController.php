@@ -17,24 +17,30 @@ class ForumController extends Controller
      *
      * @param  Category  $category
      */
-    public function index($category = '')
+    public function index(Category $category)
     {
-        $forums = $this->getLatestPosts($category);
+        $latestForums = Forum::latest();
+
+        if ($category->exists) {
+            $latestForums->where('category_id', $category->id);
+        }
+
+        $forums = $latestForums->with('category')->paginate(10);
 
         return view('welcome', compact('forums'));
     }
 
-    private function getLatestPosts($category = '')
-    {
-        if ($category) {
-            $category = Category::whereSlug($category)->first();
-            $forum = Forum::where('category_id', $category->id)->latest();
-        } else {
-            $forum = Forum::latest();
-        }
-
-        return $forum->with('category')->paginate(10);
-    }
+//    private function getLatestPosts($category = '')
+//    {
+//        if ($category) {
+//            $category = Category::whereSlug($category)->first();
+//            $forum = Forum::where('category_id', $category->id)->latest();
+//        } else {
+//            $forum = Forum::latest();
+//        }
+//
+//        return $forum->with('category')->paginate(10);
+//    }
 
     /**
      * Show the form for creating a new resource.
@@ -52,7 +58,7 @@ class ForumController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -62,14 +68,15 @@ class ForumController extends Controller
             "body" => "required",
         ]);
 
-        Forum::create([
+        $forum = Forum::create([
             "user_id" => auth()->id(),
             "category_id" => $request->category_id,
             "title" => $request->title,
             "body" => $request->body,
 //            "slug" => Str::slug($request->title)
         ]);
-        return redirect()->back();
+
+        return redirect($forum->path())->with('flash', "Successfully created record!!");
     }
 
     /**
@@ -117,10 +124,12 @@ class ForumController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Forum  $forum
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Forum $forum)
+    public function destroy(Category $category, Forum $forum)
     {
-        //
+        $forum->delete();
+
+        return redirect()->back()->with('flash', "Successfully deleted record!!");
     }
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\{HomeController, ForumController};
 |
 */
 
+auth()->loginUsingId(1);
 Route::get('/',function (){
     return redirect('/posts');
 });
@@ -30,6 +31,8 @@ Route::get('/posts/create', [ForumController::class, 'create'])->middleware('aut
 Route::post('/posts', [ForumController::class, 'store'])->middleware('auth');
 
 Route::get('/posts/{category}/{forum}', [ForumController::class, 'show']);
+
+Route::delete('/posts/{category}/{forum}', [ForumController::class, 'destroy']);
 
 // /posts/savion-gaylord-phd
 Route::get('/posts/{category}', [ForumController::class, 'index']);

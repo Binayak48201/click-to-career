@@ -28,11 +28,49 @@
             justify-content: end;
             margin-top: 1rem;
         }
+
+        .custom-button {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+            color: red;
+        }
+
+        .h-17 {
+            height: 17px;
+        }
+
+        .custom-alert {
+            background: #d4edda;
+            margin: 2px;
+            padding: 1rem;
+            border-radius: 18px;
+            width: 25rem;
+            position: fixed;
+            z-index: 100;
+            bottom: 41px;
+            right: 0;
+        }
     </style>
 </head>
 <body>
+@if(session()->has('flash'))
+    <div id="alert" class="alert alert-success custom-alert" role="alert">
+        {{ session('flash') }}
+    </div>
+@endif
 @include('posts.layouts.header')
 @yield('content')
 
+
+<script>
+    setTimeout(function () {
+        document.querySelector(".custom-alert").style.display = 'none';
+    }, 3000)
+</script>
 </body>
 </html>
