@@ -1,4 +1,4 @@
-@foreach($post->reply as $reply)
+@foreach($replies as $reply)
     <div class="tt-item">
         <div class="tt-single-topic">
             <div class="tt-item-header pt-noborder">
@@ -11,7 +11,7 @@
                         </i>
                     </div>
                     <div class="tt-avatar-title">
-                        <a href="#">tesla02</a>
+                        <a href="#">{{ $reply->user->name }}</a>
                     </div>
                     <a href="#" class="tt-info-time">
                         <i class="tt-icon">
@@ -77,3 +77,5 @@
         </div>
     </div>
 @endforeach
+
+{{ $replies->links('pagination::bootstrap-4') }}

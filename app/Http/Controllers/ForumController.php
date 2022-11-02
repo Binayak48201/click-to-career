@@ -7,7 +7,9 @@ use App\Models\Forum;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Str;
 
 class ForumController extends Controller
@@ -57,16 +59,12 @@ class ForumController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  Request  $request
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        request()->validate([
-            "category_id" => "required|numeric",
-            "title" => "required",
-            "body" => "required",
-        ]);
+        $this->validateIncomingRecords();
 
         $forum = Forum::create([
             "user_id" => auth()->id(),
@@ -83,53 +81,71 @@ class ForumController extends Controller
      * Display the specified resource.
      *
      * @param  Category  $category
-     * @param  \App\Models\Forum  $forum
+     * @param  Forum  $forum
      * @return Application|Factory|View
      */
-    public function show($category, Forum $forum)
+    public function show(Category $category, Forum $forum)
     {
 //        return Forum::where('id','=',$id)->first();
 //       return  $post = Forum::with('category')->where('id', '=', $id)->firstOrFail();
 //        return $post = Forum::with('category')->whereId($id)->firstOrFail();
 //         return  $post = Forum::with('category','reply')->where('id', $forum)->firstOrFail();
         return view('posts.show', [
-            'post' => $forum->load(['category', 'reply'])
+            'forum' => $forum->load('category'),
+            'replies' => $forum->reply()->latest()->paginate(10)
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Forum  $forum
-     * @return \Illuminate\Http\Response
+     * @param  Forum  $forum
+     * @return Application|Factory|View
      */
     public function edit(Forum $forum)
     {
-        //
+        return view('posts.edit', compact('forum'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Forum  $forum
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param  Forum  $forum
+     * @return Application|RedirectResponse|Redirector
      */
     public function update(Request $request, Forum $forum)
     {
-        //
+        $this->validateIncomingRecords();
+
+        $forum->update([
+            "category_id" => $request->category_id,
+            "title" => $request->title,
+            "body" => $request->body
+        ]);
+
+        return redirect($forum->path())->with('flash', "Successfully updated record!!");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Forum  $forum
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  Forum  $forum
+     * @return RedirectResponse
      */
     public function destroy(Category $category, Forum $forum)
     {
         $forum->delete();
 
         return redirect()->back()->with('flash', "Successfully deleted record!!");
+    }
+
+    private function validateIncomingRecords()
+    {
+        request()->validate([
+            "category_id" => "required|numeric",
+            "title" => "required",
+            "body" => "required",
+        ]);
     }
 }
