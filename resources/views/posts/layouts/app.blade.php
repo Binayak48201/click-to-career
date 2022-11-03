@@ -55,6 +55,12 @@
             bottom: 41px;
             right: 0;
         }
+
+        .avatar {
+            height: 56px;
+            border-radius: 50%;
+            width: 4rem;
+        }
     </style>
 </head>
 <body>
@@ -72,5 +78,6 @@
         document.querySelector(".custom-alert").style.display = 'none';
     }, 3000)
 </script>
+<script src="{{ asset('bundle.js')  }}"></script>
 </body>
 </html>

@@ -27,7 +27,7 @@ class ForumController extends Controller
             $latestForums->where('category_id', $category->id);
         }
 
-        $forums = $latestForums->with('category')->paginate(10);
+         $forums = $latestForums->with('category','user')->paginate(10);
 
         return view('welcome', compact('forums'));
     }

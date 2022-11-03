@@ -15,7 +15,7 @@ class ReplyController extends Controller
     public function store(Forum $forum)
     {
         request()->validate([
-            'body' => ["required",'max:300','string']
+            'body' => ["required",'min:10','string']
         ]);
 
         Reply::create([

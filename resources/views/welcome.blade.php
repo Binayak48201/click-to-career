@@ -18,9 +18,11 @@
                 @foreach($forums as $forum)
                     <div class="tt-item tt-itemselect">
                         <div class="tt-col-avatar">
-                            <svg class="tt-icon">
-                                <use xlink:href="#icon-ava-k"></use>
-                            </svg>
+                            @if($forum->user->avatar)
+                                <img src="{{ $forum->user->avatar }}" alt="" class="avatar">
+                            @else
+                                <img src="{{ asset('default.jpg') }}" alt="" class="avatar">
+                            @endif
                         </div>
                         <div class="tt-col-description">
                             <h6 class="tt-title">

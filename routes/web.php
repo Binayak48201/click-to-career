@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{HomeController, ForumController, ReplyController};
+use App\Http\Controllers\{HomeController, ForumController, ReplyController, UserController};
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +42,8 @@ Route::get('/posts/{category}', [ForumController::class, 'index']);
 
 Route::post('/posts/{forum}/reply', [ReplyController::class, 'store'])->name('reply.store');
 
+Route::get('profile/{user}', [UserController::class, 'index']);
+Route::patch('profile/{user}/update', [UserController::class, 'avatar']);
 
 //SPA
 require __DIR__.'/auth.php';
