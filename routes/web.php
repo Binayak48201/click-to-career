@@ -14,7 +14,7 @@ use App\Http\Controllers\{HomeController, ForumController, ReplyController, User
 |
 */
 
-auth()->loginUsingId(2);
+auth()->loginUsingId(17);
 Route::get('/', function () {
     return redirect('/posts');
 });
@@ -34,7 +34,7 @@ Route::patch('/posts/{forum}', [ForumController::class, 'update'])->name('forum.
 
 Route::get('/posts/{category}/{forum}', [ForumController::class, 'show']);
 
-Route::delete('/posts/{category}/{forum}', [ForumController::class, 'destroy']);
+Route::delete('/posts/{category}/{forum}', [ForumController::class, 'destroy'])->middleware('auth');
 
 // /posts/savion-gaylord-phd
 Route::get('/posts/{category}', [ForumController::class, 'index']);
@@ -44,6 +44,9 @@ Route::post('/posts/{forum}/reply', [ReplyController::class, 'store'])->name('re
 
 Route::get('profile/{user}', [UserController::class, 'index']);
 Route::patch('profile/{user}/update', [UserController::class, 'avatar']);
+
+
+
 
 //SPA
 require __DIR__.'/auth.php';

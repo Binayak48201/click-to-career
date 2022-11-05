@@ -20,6 +20,11 @@ class Reply extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function forum()
+    {
+       return $this->belongsTo(Forum::class);
+    }
+
 //    public function getUserAttribute()
 //    {
 //        $user = $this->user()->first();

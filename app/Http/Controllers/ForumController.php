@@ -21,13 +21,18 @@ class ForumController extends Controller
      */
     public function index(Category $category)
     {
+
         $latestForums = Forum::latest();
 
         if ($category->exists) {
             $latestForums->where('category_id', $category->id);
         }
 
-         $forums = $latestForums->with('category','user')->paginate(10);
+        if ($search = request('search')) {
+            $latestForums->where('title', 'like', '%'.$search.'%');
+        }
+
+        $forums = $latestForums->with('category', 'user')->paginate(10);
 
         return view('welcome', compact('forums'));
     }
