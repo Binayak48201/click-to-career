@@ -15,6 +15,19 @@ class Reply extends Model
 
 //    protected $appends = ['user'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($reply) {
+            $reply->forum->increment('replies_count');
+        });
+
+        static::deleted(function ($reply) {
+            $reply->forum->decrement('replies_count');
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -22,7 +35,7 @@ class Reply extends Model
 
     public function forum()
     {
-       return $this->belongsTo(Forum::class);
+        return $this->belongsTo(Forum::class);
     }
 
 //    public function getUserAttribute()

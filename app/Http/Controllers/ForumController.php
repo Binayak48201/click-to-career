@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Forum;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -21,18 +22,22 @@ class ForumController extends Controller
      */
     public function index(Category $category)
     {
-
-        $latestForums = Forum::latest();
+        $latestForums = Forum::query();
 
         if ($category->exists) {
-            $latestForums->where('category_id', $category->id);
+            $latestForums->latest()->where('category_id', $category->id);
         }
 
         if ($search = request('search')) {
-            $latestForums->where('title', 'like', '%'.$search.'%');
+            $latestForums->latest()->where('title', 'like', '%'.$search.'%');
+        } elseif ($username = request('by')) {
+            $user = User::where('name', $username)->firstOrfail();
+            $latestForums->latest()->where('user_id', $user->id);
+        } elseif (request('popular')) {
+            $latestForums->orderBy('replies_count', 'desc');
         }
 
-        $forums = $latestForums->with('category', 'user')->paginate(10);
+        $forums = $latestForums->with('category', 'user')->paginate(100000);
 
         return view('welcome', compact('forums'));
     }
@@ -91,6 +96,8 @@ class ForumController extends Controller
      */
     public function show(Category $category, Forum $forum)
     {
+//        return $forum->reply()->latest()->paginate(10);
+        $forum->increment('visits');
 //        return Forum::where('id','=',$id)->first();
 //       return  $post = Forum::with('category')->where('id', '=', $id)->firstOrFail();
 //        return $post = Forum::with('category')->whereId($id)->firstOrFail();

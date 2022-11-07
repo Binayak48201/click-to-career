@@ -48,7 +48,7 @@
                         <div class="tt-col-category"><span
                                     class="tt-color01 tt-badge">{{ $forum->category->name  }}</span></div>
                         <div class="tt-col-value hide-mobile">985</div>
-                        <div class="tt-col-value tt-color-select hide-mobile">502</div>
+                        <div class="tt-col-value tt-color-select hide-mobile">{{ $forum->replies_count }}</div>
                         <div class="tt-col-value hide-mobile">15.1k</div>
 
                         <div style="display: flex">

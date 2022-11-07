@@ -35,8 +35,11 @@
                     <nav>
                         <ul>
                             <li><a href="/"><span>Home </span></a></li>
-                            <li><a href="page-tabs.html"><span>Trending</span></a></li>
-                            <li><a href="page-create-topic.html"><span>New</span></a></li>
+                            <li><a href="/posts/?popular=1"><span>Trending</span></a></li>
+                            @auth
+                                <li><a href="/posts?by={{ auth()->user()->name }}"><span>My Posts</span></a></li>
+                                <li><a href="/posts/create"><span>New</span></a></li>
+                            @endauth
                             <li>
                                 <a href=""><span>Category</span></a>
                                 <ul>

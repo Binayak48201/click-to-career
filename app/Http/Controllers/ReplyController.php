@@ -15,8 +15,13 @@ class ReplyController extends Controller
     public function store(Forum $forum)
     {
         request()->validate([
-            'body' => ["required",'min:10','string']
+            'body' => ["required", 'min:10', 'string']
         ]);
+//          OPTIONAL
+//        $forum->reply()->create([
+//            'user_id' => auth()->id(),
+//            'body' => request('body')
+//        ]);
 
         Reply::create([
             'user_id' => auth()->id(),
@@ -24,6 +29,6 @@ class ReplyController extends Controller
             'body' => request('body')
         ]);
 
-        return redirect()->back()->with('flash','Reply created!!');
+        return redirect()->back()->with('flash', 'Reply created!!');
     }
 }

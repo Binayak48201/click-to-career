@@ -12,7 +12,6 @@ class Forum extends Model
 
     protected $fillable = ['category_id', 'title', 'body', 'slug', 'user_id'];
 
-//    protected $appends = ['accessor'];
 
     protected static function boot()
     {
@@ -70,5 +69,6 @@ class Forum extends Model
     {
         return $this->hasMany(Reply::class, 'forum_id');
     }
+
 
 }
