@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{HomeController, ForumController, ReplyController, UserController};
+use App\Http\Controllers\{HomeController, ForumController, ReplyController, UserController,FavoriteController};
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +14,8 @@ use App\Http\Controllers\{HomeController, ForumController, ReplyController, User
 |
 */
 
-//auth()->loginUsingId(17);
+auth()->loginUsingId(1);
+
 Route::get('/', function () {
     return redirect('/posts');
 });
@@ -45,7 +46,11 @@ Route::post('/posts/{forum}/reply', [ReplyController::class, 'store'])->name('re
 Route::get('profile/{user}', [UserController::class, 'index']);
 Route::patch('profile/{user}/update', [UserController::class, 'avatar']);
 
-
+// Favouties routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/replies/{reply}/favorites', [FavoriteController::class, 'store'])->name('reply.favorite');
+    Route::delete('/replies/{reply}/favorites', [FavoriteController::class, 'destroy'])->name('reply.unfavorite');
+});
 
 
 //SPA

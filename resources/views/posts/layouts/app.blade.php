@@ -61,6 +61,9 @@
             border-radius: 50%;
             width: 4rem;
         }
+        .tw-flex{
+            display: flex;
+        }
     </style>
 </head>
 <body>

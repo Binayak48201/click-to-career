@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 
 class ForumController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -96,7 +97,7 @@ class ForumController extends Controller
      */
     public function show(Category $category, Forum $forum)
     {
-//        return $forum->reply()->latest()->paginate(10);
+//        return $forum->reply()->latest()->get();
         $forum->increment('visits');
 //        return Forum::where('id','=',$id)->first();
 //       return  $post = Forum::with('category')->where('id', '=', $id)->firstOrFail();
