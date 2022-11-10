@@ -117,6 +117,12 @@ class ForumController extends Controller
      */
     public function edit(Forum $forum)
     {
+        $this->authorize('update', $forum);
+//        abort_if($forum->user_id != auth()->id(),403);
+//        if ($forum->user_id != auth()->id()) {
+//            abort('403');
+//        }
+
         return view('posts.edit', compact('forum'));
     }
 
@@ -129,6 +135,8 @@ class ForumController extends Controller
      */
     public function update(Request $request, Forum $forum)
     {
+        $this->authorize('update', $forum);
+
         $this->validateIncomingRecords();
 
         $forum->update([
@@ -148,6 +156,8 @@ class ForumController extends Controller
      */
     public function destroy(Category $category, Forum $forum)
     {
+        $this->authorize('delete', $forum);
+
         $forum->delete();
 
         return redirect()->back()->with('flash', "Successfully deleted record!!");

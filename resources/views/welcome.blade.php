@@ -61,7 +61,7 @@
                                           d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
                             </a>
-                            @auth
+                            @can('update', $forum)
                                 <a href="{{ route('forum.edit',$forum->slug) }}" class="pr-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          stroke-width="1.5" stroke="currentColor" class="h-17">
@@ -80,7 +80,7 @@
                                         </svg>
                                     </button>
                                 </form>
-                            @endauth
+                            @endcan
                         </div>
                     </div>
                 @empty
