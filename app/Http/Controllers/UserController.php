@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Forum;
 use App\Models\Reply;
 use App\Models\User;
@@ -17,11 +18,13 @@ class UserController extends Controller
     {
         $user = User::with('forum.category')->where('name', $user)->firstOrFail();
 
+
         $reply = Reply::without('user')->with('forum.category')->where('user_id', $user->id)->latest()->paginate(10);
 
         return view('profile.index', [
             'user' => $user,
-            'replies' => $reply
+            'replies' => $reply,
+            'activities' => Activity::feed($user)
         ]);
     }
 

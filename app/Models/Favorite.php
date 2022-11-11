@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\RecordActivities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Favorite extends Model
 {
-    use HasFactory;
+    use HasFactory,RecordActivities;
 
     protected $guarded = [];
+
+
 }

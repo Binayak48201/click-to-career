@@ -41,6 +41,14 @@
                                 <use xlink:href="#icon-ava-n"></use>
                             </svg>
                         </div>
+                        @foreach($activities as $date => $activity)
+                            {{ $date }}
+                            <br>
+                            @foreach($activity as $record)
+                                {{ $record->type }}
+                                <br>
+                            @endforeach
+                        @endforeach
                         <div class="tt-col-description">
                             <h6 class="tt-title"><a href="#">
                                     Does Envato act against the authors of Envato markets?

@@ -14,7 +14,7 @@ use App\Http\Controllers\{HomeController, ForumController, ReplyController, User
 |
 */
 
-//auth()->loginUsingId(1);
+auth()->loginUsingId(1);
 
 Route::get('/', function () {
     return redirect('/posts');
