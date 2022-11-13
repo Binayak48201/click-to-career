@@ -14,11 +14,16 @@ use App\Http\Controllers\{HomeController, ForumController, ReplyController, User
 |
 */
 
-auth()->loginUsingId(1);
+//auth()->loginUsingId(235);
+
 
 Route::get('/', function () {
     return redirect('/posts');
 });
+
+Route::get('/view-project', function () {
+   return "sdfasdf";
+})->middleware('can:secret_report');
 
 
 Route::get('/dashboard', function () {
@@ -28,7 +33,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/posts', [ForumController::class, 'index']);
 
-Route::get('/posts/create', [ForumController::class, 'create'])->middleware('auth');
+Route::get('/posts/create', [ForumController::class, 'create'])->middleware(['auth','must-be-confirmed']);
 Route::post('/posts', [ForumController::class, 'store'])->middleware('auth');
 Route::get('/posts/{forum}/edit', [ForumController::class, 'edit'])->name('forum.edit')->middleware('auth');
 Route::patch('/posts/{forum}', [ForumController::class, 'update'])->name('forum.update')->middleware('auth');
@@ -51,6 +56,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/replies/{reply}/favorites', [FavoriteController::class, 'store'])->name('reply.favorite');
     Route::delete('/replies/{reply}/favorites', [FavoriteController::class, 'destroy'])->name('reply.unfavorite');
 });
+
+
+Route::get('/register/confirmation', [UserController::class, 'verifyUser']);
 
 
 //SPA

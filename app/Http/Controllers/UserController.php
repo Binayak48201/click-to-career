@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\Forum;
 use App\Models\Reply;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -20,7 +21,7 @@ class UserController extends Controller
 
 
         $reply = Reply::without('user')->with('forum.category')->where('user_id', $user->id)->latest()->paginate(10);
-
+//        return  Activity::feed($user);
         return view('profile.index', [
             'user' => $user,
             'replies' => $reply,
@@ -53,5 +54,17 @@ class UserController extends Controller
 
 
         return redirect()->back()->with('flash', 'Avatar updated successfully!!');
+    }
+
+
+    public function verifyUser()
+    {
+        if ($token = request('token')) {
+            $user = User::where('remember_token', $token)->firstOrFail();
+
+            $user->confirm();
+
+            return redirect('/posts')->with('flash', 'Successfully confirmed your email addresss');
+        }
     }
 }

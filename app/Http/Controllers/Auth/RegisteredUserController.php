@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\PleaseConfirmYourEmail;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
@@ -43,11 +46,15 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'remember_token' => Str::random(7),
         ]);
+
+        Mail::to($user)->send(new PleaseConfirmYourEmail($user));
 
         event(new Registered($user));
 
         Auth::login($user);
+
 
         return redirect(RouteServiceProvider::HOME);
     }
