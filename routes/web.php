@@ -17,49 +17,26 @@ use App\Http\Controllers\{HomeController, ForumController, ReplyController, User
 //auth()->loginUsingId(235);
 
 
-Route::get('/', function () {
-    return redirect('/posts');
-});
-
-Route::get('/view-project', function () {
-   return "sdfasdf";
-})->middleware('can:secret_report');
+//Route::get('/', function () {
+//    return redirect('/posts');
+//});
+//
+//Route::get('/view-project', function () {
+//   return "sdfasdf";
+//})->middleware('can:secret_report');
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+   return redirect('/posts');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-
-Route::get('/posts', [ForumController::class, 'index']);
-
-Route::get('/posts/create', [ForumController::class, 'create'])->middleware(['auth','must-be-confirmed']);
-Route::post('/posts', [ForumController::class, 'store'])->middleware('auth');
-Route::get('/posts/{forum}/edit', [ForumController::class, 'edit'])->name('forum.edit')->middleware('auth');
-Route::patch('/posts/{forum}', [ForumController::class, 'update'])->name('forum.update')->middleware('auth');
-
-Route::get('/posts/{category}/{forum}', [ForumController::class, 'show']);
-
-Route::delete('/posts/{category}/{forum}', [ForumController::class, 'destroy'])->middleware('auth');
-
-// /posts/savion-gaylord-phd
-Route::get('/posts/{category}', [ForumController::class, 'index']);
-
-
-Route::post('/posts/{forum}/reply', [ReplyController::class, 'store'])->name('reply.store');
-
-Route::get('profile/{user}', [UserController::class, 'index']);
-Route::patch('profile/{user}/update', [UserController::class, 'avatar']);
-
-// Favouties routes
-Route::middleware(['auth'])->group(function () {
-    Route::post('/replies/{reply}/favorites', [FavoriteController::class, 'store'])->name('reply.favorite');
-    Route::delete('/replies/{reply}/favorites', [FavoriteController::class, 'destroy'])->name('reply.unfavorite');
-});
 
 
 Route::get('/register/confirmation', [UserController::class, 'verifyUser']);
 
+require __DIR__.'/auth.php';
 
 //SPA
-require __DIR__.'/auth.php';
+Route::get('/{any}', function () {
+    return view('welcome');
+})->where("any",".*");
+

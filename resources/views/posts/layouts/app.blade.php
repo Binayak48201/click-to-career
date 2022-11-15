@@ -61,19 +61,26 @@
             border-radius: 50%;
             width: 4rem;
         }
-        .tw-flex{
+
+        .tw-flex {
             display: flex;
         }
     </style>
+    @vite(['resources/js/app.js'])
 </head>
 <body>
-@if(session()->has('flash'))
-    <div id="alert" class="alert alert-success custom-alert" role="alert">
-        {{ session('flash') }}
-    </div>
-@endif
-@include('posts.layouts.header')
-@yield('content')
+<div id="app">
+</div>
+
+{{--    @if(session()->has('flash'))--}}
+{{--        <div id="alert" class="alert alert-success custom-alert" role="alert">--}}
+{{--            {{ session('flash') }}--}}
+{{--        </div>--}}
+{{--    @endif--}}
+{{--    <div>--}}
+{{--        @include('posts.layouts.header')--}}
+{{--        @yield('content')--}}
+{{--    </div>--}}
 
 
 <script>

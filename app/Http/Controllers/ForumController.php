@@ -40,7 +40,7 @@ class ForumController extends Controller
 
         $forums = $latestForums->with('category', 'user')->paginate(100000);
 
-        return view('welcome', compact('forums'));
+
     }
 
 //    private function getLatestPosts($category = '')

@@ -1,7 +1,17 @@
-import './bootstrap';
+import axios from 'axios';
+window.axios = axios;
 
-import Alpine from 'alpinejs';
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-window.Alpine = Alpine;
+import App from './App.vue'
 
-Alpine.start();
+
+import {createApp} from 'vue'
+import router from "./router";
+
+
+const app = createApp(App);
+
+app.use(router)
+
+app.mount("#app")
