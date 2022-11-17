@@ -38,8 +38,9 @@ class ForumController extends Controller
             $latestForums->orderBy('replies_count', 'desc');
         }
 
-        $forums = $latestForums->with('category', 'user')->paginate(100000);
+        $forums = $latestForums->with('category', 'user')->paginate(10);
 
+        return response()->json($forums);
 
     }
 

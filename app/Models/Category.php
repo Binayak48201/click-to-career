@@ -13,6 +13,7 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $appends = ['path'];
     /**
      * @var array
      */
@@ -34,7 +35,7 @@ class Category extends Model
     /**
      * @return string
      */
-    public function path()
+    public function getPathAttribute()
     {
         return "/posts/{$this->slug}";
     }

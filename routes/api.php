@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/channels', [\App\Http\Controllers\HomeController::class, 'index']);
 
 
 Route::get('/posts', [ForumController::class, 'index']);

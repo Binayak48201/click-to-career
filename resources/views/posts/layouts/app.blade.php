@@ -66,6 +66,7 @@
             display: flex;
         }
     </style>
+
     @vite(['resources/js/app.js'])
 </head>
 <body>
@@ -81,6 +82,7 @@
 {{--        @include('posts.layouts.header')--}}
 {{--        @yield('content')--}}
 {{--    </div>--}}
+
 
 
 <script>

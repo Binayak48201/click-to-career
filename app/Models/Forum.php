@@ -14,6 +14,8 @@ class Forum extends Model
     protected $fillable = ['category_id', 'title', 'body', 'slug', 'user_id'];
 
 
+    protected $appends = ['path'];
+
     protected static function boot()
     {
         parent::boot();
@@ -44,7 +46,7 @@ class Forum extends Model
         return "slug";
     }
 
-    public function path()
+    public function getPathAttribute()
     {
 //        return "/posts/{$this->slug}";
         return "/posts/{$this->category->slug}/{$this->slug}";

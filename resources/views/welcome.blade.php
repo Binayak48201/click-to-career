@@ -103,7 +103,7 @@
 {{--    </main>--}}
 {{--@endsection--}}
 
-<!doctype html>
+        <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -115,7 +115,17 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
-
+    <script>
+        window.App = {!!
+       json_encode([
+           'csrfToken' => csrf_token(),
+           'user' => auth()->user(),
+           'signedIn' =>auth()->check()
+        ])
+         !!};
+         let user ={!! json_encode(auth()->user()) !!}
+         // localStorage.setItem('user',JSON.stringify(user))
+    </script>
     <style>
         ul.pagination {
             display: flex;
@@ -170,6 +180,7 @@
         .tw-flex {
             display: flex;
         }
+        [v-cloak] { display: none}
     </style>
     @vite(['resources/js/app.js'])
 </head>
