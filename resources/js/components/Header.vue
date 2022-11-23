@@ -28,7 +28,10 @@
           <div class="tt-desktop-menu">
             <nav>
               <ul>
-                <li><a href="/"><span>Home </span></a></li>
+                <li>
+                  <router-link :to="{ name : 'Posts'}"><span>Home </span></router-link>
+<!--                  <a href="/"><span>Home </span></a>-->
+                </li>
                 <li><a href="/posts/?popular=1"><span>Trending</span></a></li>
                 <template v-if="isSignedIn">
                   <li>

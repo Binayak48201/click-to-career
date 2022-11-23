@@ -11,7 +11,9 @@
           <div class="tt-col-value">Actions</div>
         </div>
         <template v-if="loading">
-         <div class="loader"></div>
+          <div class="custom-flex">
+            <div class="loader"></div>
+          </div>
         </template>
         <template v-else>
           <div v-if="posts.length > 0 " v-for="(post,index) in posts" class="tt-item">
@@ -21,7 +23,7 @@
             </div>
             <div class="tt-col-description">
               <h6 class="tt-title">
-                <a :href="post.path">
+                <router-link :to="post.path">
                   {{ post.title }}
                   <div class="row align-items-center no-gutters">
                     <div class="col-11">
@@ -37,7 +39,7 @@
                       <div class="tt-value">1h</div>
                     </div>
                   </div>
-                </a>
+                </router-link>
               </h6>
               <div class="row align-items-center no-gutters">
                 <div class="col-1 ml-auto show-mobile">
@@ -112,23 +114,35 @@ export default {
 </script>
 <style>
 .loader {
-  border: 16px solid #f3f3f3;
+  border: 7px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
+  border-top: 5px solid #3498db;
+  width: 3rem;
+  height: 3rem;
   animation: spin 2s linear infinite;
 }
 
 /* Safari */
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.custom-flex {
+  display: flex;
+  justify-content: center;
 }
 </style>
