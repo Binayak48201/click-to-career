@@ -14,7 +14,7 @@ use App\Http\Controllers\{HomeController, ForumController, ReplyController, User
 |
 */
 
-//auth()->loginUsingId(235);
+auth()->loginUsingId(235);
 
 
 //Route::get('/', function () {

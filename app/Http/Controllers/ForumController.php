@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
@@ -94,20 +95,18 @@ class ForumController extends Controller
      *
      * @param  Category  $category
      * @param  Forum  $forum
-     * @return Application|Factory|View
+     * @return JsonResponse
      */
     public function show(Category $category, Forum $forum)
     {
-//        return $forum->reply()->latest()->get();
         $forum->increment('visits');
-//        return Forum::where('id','=',$id)->first();
-//       return  $post = Forum::with('category')->where('id', '=', $id)->firstOrFail();
-//        return $post = Forum::with('category')->whereId($id)->firstOrFail();
-//         return  $post = Forum::with('category','reply')->where('id', $forum)->firstOrFail();
-        return view('posts.show', [
-            'forum' => $forum->load('category'),
+
+        $data = [
+            'forum' => $forum->load('category','user'),
             'replies' => $forum->reply()->latest()->paginate(10)
-        ]);
+        ];
+
+        return response()->json($data);
     }
 
     /**

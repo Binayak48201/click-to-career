@@ -14,7 +14,7 @@
                   </i>
                 </div>
                 <div class="tt-avatar-title">
-                  <a href="#">dylan89</a>
+                  <!--                  <a href="#">{{ forum.user.name }}</a>-->
                 </div>
                 <a href="#" class="tt-info-time">
                   <i class="tt-icon">
@@ -22,27 +22,27 @@
                       <use xlink:href="#icon-time"></use>
                     </svg>
                   </i>
-                  <!--                                    {{ $forum->created_at->diffForHumans() }}-->
+                  {{ forum.created_at }}
                 </a>
               </div>
               <h3 class="tt-item-title">
                 <a href="#">
-                  <!--                                    {{ $forum->title }}-->
+                  {{ forum.title }}
                 </a>
               </h3>
               <div class="tt-item-tag">
                 <ul class="tt-list-badge">
-                  <li><a href="#">
-                    <!--                                      <span-->
-                    <!--                                                    class="tt-color03 tt-badge">{{ $forum->category->name }}</span>-->
-                  </a>
+                  <li>
+                    <a href="#">
+                      <!--                      <span class="tt-color03 tt-badge">{{ forum.category.name }}</span>-->
+                    </a>
                   </li>
                 </ul>
               </div>
             </div>
             <div class="tt-item-description">
               <p>
-                <!--                                {{ $forum->body }}-->
+                {{ forum.body }}
               </p>
             </div>
             <div class="tt-item-info info-bottom">
@@ -234,7 +234,7 @@
           </div>
         </div>
 
-        <!--                @include('posts.reply')-->
+        <replies v-for="(reply,index) in replies" :key="index" :data="reply"></replies>
 
       </div>
 
@@ -286,22 +286,34 @@
   </main>
 </template>
 <script>
+import Replies from "../components/Replies.vue";
+
 export default {
   name: "PostShow",
+  components: {
+    Replies
+  },
   data: () => ({
-    url : ''
+    url: '',
+    forum: {},
+    replies: []
   }),
   methods: {
     fetchData() {
-//      window.axios.get()
+      window.axios.get(this.url)
+          .then((response) => {
+            const {forum, replies} = response.data
+            this.forum = forum
+            this.replies = replies.data
+          }).catch((error) => {
+        alert(error)
+      });
     }
   },
   created() {
     const {category, forum} = this.$route.params
-    this.url = `/posts/${category}/${forum}`
+    this.url = `/api/posts/${category}/${forum}`
+    this.fetchData()
   },
-  mounted() {
-//    this.fetchData()
-  }
 }
 </script>
