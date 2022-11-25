@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class Forum extends Model
 {
-    use HasFactory,RecordActivities;
+    use HasFactory, RecordActivities;
 
     protected $fillable = ['category_id', 'title', 'body', 'slug', 'user_id'];
 
@@ -73,5 +73,12 @@ class Forum extends Model
         return $this->hasMany(Reply::class, 'forum_id');
     }
 
+    public function addReply($body)
+    {
+        return $this->reply()->create([
+            'user_id' => auth()->id(),
+            'body' => $body
+        ]);
+    }
 
 }

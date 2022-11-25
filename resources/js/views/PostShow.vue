@@ -238,29 +238,8 @@
 
       </div>
 
+      <NewReply @created="createdReply"/>
 
-      <div class="tt-wrapper-inner">
-        <div class="pt-editor form-default">
-          <h6 class="pt-title">Post Your Reply</h6>
-          <!--                    <form action="{{ route('reply.store',$forum->slug) }}" method="post">-->
-          <!--                        @csrf-->
-          <!--                        <div class="form-group">-->
-          <!--                        <textarea name="body" class="form-control" rows="5"-->
-          <!--                                  placeholder="Lets get started"></textarea>-->
-          <!--                        </div>-->
-          <!--                        <div class="pt-row">-->
-          <!--                            <div class="col-auto">-->
-          <!--                                <button type="submit" class="btn btn-secondary btn-width-lg">Reply</button>-->
-          <!--                            </div>-->
-          <!--                        </div>-->
-          <!--                    </form>-->
-          <!--                    @error('body')-->
-          <!--                    <p style="color: red;margin-bottom: 2rem;">-->
-          <!--                        {{ $message }}-->
-          <!--                    </p>-->
-          <!--                    @enderror-->
-        </div>
-      </div>
       <div class="tt-topic-list mb-5">
         <div class="tt-item tt-item-popup">
           <div class="tt-col-avatar">
@@ -287,18 +266,24 @@
 </template>
 <script>
 import Replies from "../components/Replies.vue";
+import NewReply from "../components/NewReply.vue";
 
 export default {
   name: "PostShow",
   components: {
-    Replies
+    Replies,
+    NewReply
   },
   data: () => ({
     url: '',
     forum: {},
-    replies: []
+    replies: [],
+
   }),
   methods: {
+    createdReply(data) {
+      this.replies.shift(data)
+    },
     fetchData() {
       window.axios.get(this.url)
           .then((response) => {

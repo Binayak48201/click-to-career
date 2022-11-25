@@ -25,17 +25,28 @@ export default {
   },
   methods: {
     toggle() {
-      this.status ? this.unlike() : this.like()
+      this.newStatus ? this.unlike() : this.like()
     },
     like() {
       window.axios.post(this.endpoint)
-      this.newCount++
       this.newStatus = true
+      this.newCount++
+      this.flash('Reply Favorited.!!')
     },
     unlike() {
       window.axios.delete(this.endpoint)
-      this.newCount--
       this.newStatus = false
+      this.newCount--
+      this.flash('Reply UnFavorited.!!')
+    },
+    flash(data) {
+      this.$swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: data,
+        showConfirmButton: false,
+        timer: 1000
+      })
     }
   }
 }
