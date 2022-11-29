@@ -234,7 +234,11 @@
           </div>
         </div>
 
-        <replies v-for="(reply,index) in replies" :key="index" :data="reply"></replies>
+        <replies v-for="(reply,index) in replies" :key="index"
+                 :data="reply"
+                 @updated="replyWasUPdated"
+                 @deleted="remove"
+        ></replies>
 
       </div>
 
@@ -278,11 +282,16 @@ export default {
     url: '',
     forum: {},
     replies: [],
-
   }),
   methods: {
     createdReply(data) {
       this.replies.shift(data)
+    },
+    replyWasUPdated() {
+      this.fetchData();
+    },
+    remove(index) {
+      this.fetchData();
     },
     fetchData() {
       window.axios.get(this.url)

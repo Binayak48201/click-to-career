@@ -7,32 +7,33 @@ use App\Models\Forum;
 use App\Models\Reply;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     /**
      * @param $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return JsonResponse
      */
     public function index($user)
     {
         $user = User::with('forum.category')->where('name', $user)->firstOrFail();
 
-
         $reply = Reply::without('user')->with('forum.category')->where('user_id', $user->id)->latest()->paginate(10);
-//        return  Activity::feed($user);
-        return view('profile.index', [
+
+        $data = [
             'user' => $user,
             'replies' => $reply,
             'activities' => Activity::feed($user)
-        ]);
+        ];
+        return response()->json($data);
     }
 
     /**
      * @param  Request  $request
      * @param $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @return JsonResponse
      */
     public function avatar(Request $request, $user)
     {
@@ -52,8 +53,9 @@ class UserController extends Controller
 
         $request->avatar->move(public_path('uploads'), $fileName);
 
+        return response()->json($user);
 
-        return redirect()->back()->with('flash', 'Avatar updated successfully!!');
+//        return redirect()->back()->with('flash', 'Avatar updated successfully!!');
     }
 
 

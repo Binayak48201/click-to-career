@@ -47,6 +47,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'remember_token' => Str::random(7),
+            'avatar' => '/default.jpg'
         ]);
 
         Mail::to($user)->send(new PleaseConfirmYourEmail($user));

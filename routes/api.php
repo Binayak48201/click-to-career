@@ -27,7 +27,7 @@ Route::get('/channels', [\App\Http\Controllers\HomeController::class, 'index']);
 
 Route::get('/posts', [ForumController::class, 'index']);
 
-Route::get('/posts/create', [ForumController::class, 'create'])->middleware(['auth','must-be-confirmed']);
+Route::get('/posts/create', [ForumController::class, 'create'])->middleware(['auth', 'must-be-confirmed']);
 Route::post('/posts', [ForumController::class, 'store'])->middleware('auth');
 Route::get('/posts/{forum}/edit', [ForumController::class, 'edit'])->name('forum.edit')->middleware('auth');
 Route::patch('/posts/{forum}', [ForumController::class, 'update'])->name('forum.update')->middleware('auth');
@@ -41,9 +41,11 @@ Route::get('/posts/{category}', [ForumController::class, 'index']);
 
 
 Route::post('/posts/{forum}/reply', [ReplyController::class, 'store'])->name('reply.store');
+Route::patch('/replies/{reply}', [ReplyController::class, 'update'])->name('reply.update');
+Route::delete('/replies/{reply}', [ReplyController::class, 'destroy'])->name('reply.delete');
 
 Route::get('profile/{user}', [UserController::class, 'index']);
-Route::patch('profile/{user}/update', [UserController::class, 'avatar']);
+Route::post('profile/{user}/update', [UserController::class, 'avatar']);
 
 // Favouties routes
 Route::middleware(['auth'])->group(function () {

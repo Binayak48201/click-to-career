@@ -29,4 +29,27 @@ class ReplyController extends Controller
 
         return response()->json($reply);
     }
+
+
+    public function update(Reply $reply)
+    {
+        $reply->update([
+            'body' => request('body')
+        ]);
+
+        return response()->json($reply);
+    }
+
+
+    public function destroy(Reply $reply)
+    {
+        $reply->delete();
+
+        $data = [
+            'message' => 'Reply was Delted Successfully.!!'
+        ];
+
+        return response()->json($data);
+
+    }
 }

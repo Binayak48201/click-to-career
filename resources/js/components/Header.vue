@@ -30,7 +30,7 @@
               <ul>
                 <li>
                   <router-link :to="{ name : 'Posts'}"><span>Home </span></router-link>
-<!--                  <a href="/"><span>Home </span></a>-->
+                  <!--                  <a href="/"><span>Home </span></a>-->
                 </li>
                 <li><a href="/posts/?popular=1"><span>Trending</span></a></li>
                 <template v-if="isSignedIn">
@@ -77,12 +77,14 @@
               <nav>
                 <ul>
                   <li>
-                    <a href="">
+                    <a href="#">
                       <span v-text="user.name"></span>
                     </a>
                     <ul>
                       <li>
-                        <a :href="`/profile/${ user.name }}`"><span>My Profile</span></a>
+                        <router-link :to="`/profile/${ user.name }`">
+                          My Profile
+                        </router-link>
                       </li>
                       <li>
                         <a href="" @click.prevent="logout()">Logout</a>

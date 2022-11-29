@@ -120,7 +120,7 @@
        json_encode([
            'csrfToken' => csrf_token(),
            'user' => auth()->user(),
-           'signedIn' =>auth()->check()
+           'signedIn' => auth()->check()
         ])
          !!};
          let user ={!! json_encode(auth()->user()) !!}

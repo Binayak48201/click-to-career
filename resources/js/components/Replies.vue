@@ -20,33 +20,25 @@
           </a>
         </div>
       </div>
-      <div class="tt-item-description" v-text="data.body"></div>
-      <div class="tt-item-info info-bottom">
 
+      <div class="tt-item-description" v-if="editing">
+        <div class="form-group">
+          <form @submit.prevent="update">
+            <textarea name="" id="" cols="120" rows="5" v-model="body">{{ body }}</textarea>
+            <button class="btn btn-link ml-4 mr-3" @click="editing = false">Cancel</button>
+            <button class="btn btn-color02">Update</button>
+          </form>
+        </div>
+      </div>
+
+      <div v-else class="tt-item-description" v-text="data.body"></div>
+
+
+      <div class="tt-item-info info-bottom" v-if="!editing">
         <Favorite :count="data.favorites_count" :status="data.is_favorited" :id="data.id"/>
-
+        <button class="btn btn-link ml-4 mr-3" @click="editing = true">Edit</button>
+        <button class="btn btn-link" @click="destory">Delete</button>
         <div class="col-separator"></div>
-        <a href="#" class="tt-icon-btn tt-hover-02 tt-small-indent">
-          <i class="tt-icon">
-            <svg>
-              <use xlink:href="#icon-share"></use>
-            </svg>
-          </i>
-        </a>
-        <a href="#" class="tt-icon-btn tt-hover-02 tt-small-indent">
-          <i class="tt-icon">
-            <svg>
-              <use xlink:href="#icon-flag"></use>
-            </svg>
-          </i>
-        </a>
-        <a href="#" class="tt-icon-btn tt-hover-02 tt-small-indent">
-          <i class="tt-icon">
-            <svg>
-              <use xlink:href="#icon-reply"></use>
-            </svg>
-          </i>
-        </a>
       </div>
     </div>
   </div>
@@ -66,7 +58,59 @@ export default {
   },
   data() {
     return {
-      date: ''
+      date: '',
+      editing: false,
+      body: this.data.body
+    }
+  },
+  methods: {
+    update() {
+      let newBody = this.body
+      window.axios.patch('/api/replies/' + this.data.id, {
+        body: newBody
+      })
+          .then((response) => {
+            this.editing = false;
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Updated!',
+              showConfirmButton: false,
+              timer: 1000
+            })
+            this.$emit('updated')
+          })
+          .catch(error => {
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: 'Something went wrong!',
+              showConfirmButton: false,
+              timer: 1000
+            });
+          })
+    },
+    destory() {
+      window.axios.delete('/api/replies/' + this.data.id)
+          .then((response) => {
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Delete Successfully!',
+              showConfirmButton: false,
+              timer: 1000
+            })
+            this.$emit('deleted',this.data.id)
+          })
+          .catch(error => {
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: 'Something went wrong!',
+              showConfirmButton: false,
+              timer: 1000
+            });
+          })
     }
   },
   computed: {
