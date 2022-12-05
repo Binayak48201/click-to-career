@@ -8,8 +8,13 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: "/",
+            path: "/posts",
             name: "Posts",
+            component: Post,
+        },
+        {
+            path: "/posts/:category",
+            name: "CategoryPosts",
             component: Post,
         },
         {
@@ -17,7 +22,7 @@ const router = createRouter({
             name: "PostsView",
             component: PostShow,
         },
-         {
+        {
             path: "/profile/:user",
             name: "ProfileView",
             component: ProfileView,

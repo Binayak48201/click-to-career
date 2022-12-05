@@ -99,17 +99,59 @@ export default {
   data() {
     return {
       posts: [],
-      loading: false
+      loading: false,
+      popular: 1,
+      by: 'Auth User'
     }
   },
+  methods: {
+    fetchData() {
+      if (this.$route.query.popular !== undefined || this.$route.query.by !== undefined) {
+        window.axios.get('api/posts', {params: this.$route.query})
+            .then((response) => {
+              this.posts = response.data.data
+              this.loading = false
+            })
+      } else {
+        window.axios.get('api/posts')
+            .then((response) => {
+              this.posts = response.data.data
+              this.loading = false
+            })
+      }
+    },
+    fetchWithParams() {
+      window.axios.get(`/api/posts/${this.$route.params.category}`)
+          .then((response) => {
+            this.posts = response.data.data
+            this.loading = false
+          })
+    }
+  }
+  ,
   mounted() {
     this.loading = true
-    window.axios.get('api/posts')
-        .then((response) => {
-          this.posts = response.data.data
-          this.loading = false
-        })
   }
+  ,
+  watch: {
+    '$route.params':
+        {
+          handler: function () {
+            console.log(this.$route.params)
+            if (this.$route.params.category !== undefined) {
+              this.fetchWithParams();
+            } else {
+              this.fetchData();
+            }
+          }
+          ,
+          deep: true,
+          immediate
+:
+true
+}
+,
+}
 }
 </script>
 <style>

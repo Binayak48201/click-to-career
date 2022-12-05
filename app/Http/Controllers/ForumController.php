@@ -45,18 +45,6 @@ class ForumController extends Controller
 
     }
 
-//    private function getLatestPosts($category = '')
-//    {
-//        if ($category) {
-//            $category = Category::whereSlug($category)->first();
-//            $forum = Forum::where('category_id', $category->id)->latest();
-//        } else {
-//            $forum = Forum::latest();
-//        }
-//
-//        return $forum->with('category')->paginate(10);
-//    }
-
     /**
      * Show the form for creating a new resource.
      *

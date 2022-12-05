@@ -39,7 +39,7 @@ trait RecordActivities
     public function recordActivity($event = 'created')
     {
         $this->activity()->create([
-            'user_id' => auth()->id(),
+            'user_id' => auth()->check() ? auth()->id() : 1,
             'type' => $this->getActvityType($event),  //created_Forum
         ]);
     }

@@ -32,22 +32,24 @@
                   <router-link :to="{ name : 'Posts'}"><span>Home </span></router-link>
                   <!--                  <a href="/"><span>Home </span></a>-->
                 </li>
-                <li><a href="/posts/?popular=1"><span>Trending</span></a></li>
+                <li>
+                  <router-link to="/posts?popular=1"><span>Trending</span></router-link>
+                </li>
                 <template v-if="isSignedIn">
                   <li>
-                    <a :href="`/posts?by=${ user.name }`"><span>My Posts</span></a>
+                    <router-link :to="`/posts?by=${ user.name }`"><span>My Posts</span></router-link>
                   </li>
                   <li>
-                    <a href="/posts/create"><span>New</span></a>
+                    <router-link to="/posts/create"><span>New</span></router-link>
                   </li>
                 </template>
                 <li>
                   <a href=""><span>Category</span></a>
                   <ul>
                     <li v-for="(channel,index) in  channels" :key="index">
-                      <a :href="channel.path">
+                      <router-link :to="channel.path">
                         {{ channel.name }}
-                      </a>
+                      </router-link>
                     </li>
                   </ul>
                 </li>
@@ -60,11 +62,33 @@
                 <use xlink:href="#icon-search"></use>
               </svg>
             </button>
-            <form class="search-wrapper" method="GET" action="/posts">
-              <div class="search-form">
-                <input name="search" type="text" class="tt-search__input" placeholder="Search">
+            <div class="search-form">
+              <input v-model.lazy="search" name="search" type="text" class="tt-search__input" placeholder="Search">
+            </div>
+            <div class="search-results" v-if="isSearched">
+              <div class="tt-search-scroll ps-container ps-theme-default ps-active-y"
+                   data-ps-id="c5688612-dcc8-6ef6-5cb6-5a8e82b30160">
+                <ul>
+                  <li v-for="(post,index) in searchResult" :key="index">
+                    <router-link :to="`/posts/${post.category.slug}/${post.slug}`">
+                      <h6 class="tt-title">{{ post.title }}</h6>
+                      <div class="tt-description">
+                        {{ post.body }}
+                      </div>
+                    </router-link>
+                  </li>
+                </ul>
+                <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;">
+                  <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                </div>
+                <div class="ps-scrollbar-y-rail" style="top: 0px; height: 261px; right: 3px;">
+                  <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 130px;"></div>
+                </div>
               </div>
-            </form>
+              <!--              <button type="button" class="tt-view-all" data-toggle="modal" data-target="#modalAdvancedSearch">Advanced-->
+              <!--                Search-->
+              <!--              </button>-->
+            </div>
           </div>
         </div>
         <div class="col-auto ml-auto">
@@ -109,7 +133,19 @@ export default {
     return {
       user: '',
       isSignedIn: false,
-      channels: []
+      channels: [],
+      search: '',
+      isSearched: false,
+      searchResult: []
+    }
+  },
+  watch: {
+    search(newValue, oldValue) {
+      window.axios.get('/api/posts', {params: {search: this.search}})
+          .then((response) => {
+            this.searchResult = response.data.data
+            this.isSearched = true
+          })
     }
   },
   methods: {
@@ -139,3 +175,22 @@ export default {
   }
 }
 </script>
+<style scoped>
+.tt-search .search-results {
+  position: absolute;
+  background-color: #fff;
+  border-left: 1px solid #e2e7ea;
+  border-right: 1px solid #e2e7ea;
+  border-bottom: 1px solid #e2e7ea;
+  top: auto;
+  left: 0;
+  margin-top: -2px;
+  width: 100%;
+  padding: 1px;
+  border-radius: 3px;
+  z-index: 100000;
+  opacity: 11;
+  display: block !important;
+}
+
+</style>

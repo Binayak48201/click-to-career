@@ -17,15 +17,6 @@ use App\Http\Controllers\{HomeController, ForumController, ReplyController, User
 auth()->loginUsingId(235);
 
 
-//Route::get('/', function () {
-//    return redirect('/posts');
-//});
-//
-//Route::get('/view-project', function () {
-//   return "sdfasdf";
-//})->middleware('can:secret_report');
-
-
 Route::get('/dashboard', function () {
    return redirect('/posts');
 })->middleware(['auth', 'verified'])->name('dashboard');
